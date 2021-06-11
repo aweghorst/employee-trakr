@@ -1,4 +1,4 @@
-DROP DATABASE IF EXISTS employee-trakr-db;
-CREATE DATABASE employee-trakr-db;
+DROP DATABASE IF EXISTS employee_trakr_db;
+CREATE DATABASE employee_trakr_db;
 
-USE employee-trakr-db;
+USE employee_trakr_db;

@@ -7,7 +7,7 @@ const db = mysql.createConnection({
   host: "localhost",
   user: process.env.DB_USER,
   password: process.env.DB_PW,
-  database: "employee-trakr-db",
+  database: "employee_trakr_db",
 });
 
 module.exports = db;
