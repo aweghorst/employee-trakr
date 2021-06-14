@@ -2,6 +2,27 @@ const inquirer = require("inquirer");
 const db = require("./db/queries");
 const cTable = require("console.table");
 
+function header() {
+  console.log(`
+  ███████ ███    ███ ██████  ██       ██████  ██    ██ ███████ ███████ 
+  ██      ████  ████ ██   ██ ██      ██    ██  ██  ██  ██      ██      
+  █████   ██ ████ ██ ██████  ██      ██    ██   ████   █████   █████   
+  ██      ██  ██  ██ ██      ██      ██    ██    ██    ██      ██      
+  ███████ ██      ██ ██      ███████  ██████     ██    ███████ ███████ 
+                                                                       
+                                                                       
+  ███    ███  █████  ███    ██  █████   ██████  ███████ ██████         
+  ████  ████ ██   ██ ████   ██ ██   ██ ██       ██      ██   ██        
+  ██ ████ ██ ███████ ██ ██  ██ ███████ ██   ███ █████   ██████         
+  ██  ██  ██ ██   ██ ██  ██ ██ ██   ██ ██    ██ ██      ██   ██        
+  ██      ██ ██   ██ ██   ████ ██   ██  ██████  ███████ ██   ██        
+                                                                       
+                                                                       
+  `);
+}
+
+header();
+
 //Main Menu
 function showMenu() {
   inquirer
@@ -56,6 +77,7 @@ function showMenu() {
 
 // View All Departments
 function displayDepartments() {
+  console.clear();
   db.fetchDepartments()
     .then(([rows, fields]) => {
       const departments = rows;
@@ -63,11 +85,13 @@ function displayDepartments() {
       console.log("DEPARTMENTS TABLE", "\n");
       console.table(departments);
       console.log("*****************************************");
+      console.log("\n");
     })
     .then(() => showMenu());
 }
 // View All Roles
 function displayRoles() {
+  console.clear();
   db.fetchRoles()
     .then(([rows, fields]) => {
       const roles = rows;
@@ -75,11 +99,13 @@ function displayRoles() {
       console.log("ROLES TABLE", "\n");
       console.table(roles);
       console.log("*****************************************");
+      console.log("\n");
     })
     .then(() => showMenu());
 }
 // View All Employees
 function displayEmployees() {
+  console.clear();
   db.fetchEmployees()
     .then(([rows, fields]) => {
       const employees = rows;
@@ -87,11 +113,13 @@ function displayEmployees() {
       console.log("EMPLOYEE TABLE", "\n");
       console.table(employees);
       console.log("*****************************************");
+      console.log("\n");
     })
     .then(() => showMenu());
 }
 // Add a Department
 function createDepartment() {
+  console.clear();
   inquirer
     .prompt([
       {
@@ -104,15 +132,18 @@ function createDepartment() {
       const name = result;
       db.addDepartment(name)
         .then(() => {
+          console.log("\n");
           console.log("*****************************************");
           console.log(`The ${name.name} department has been added`);
           console.log("*****************************************");
+          console.log("\n");
         })
         .then(() => showMenu());
     });
 }
 // Add a Role
 function createRole() {
+  console.clear();
   db.fetchDepartments().then(([rows, fields]) => {
     const departments = rows;
     const departmentList = departments.map(({ id, name }) => ({
@@ -143,9 +174,11 @@ function createRole() {
         const name = result;
         db.addRole(name)
           .then(() => {
+            console.log("\n");
             console.log("*****************************************");
             console.log(`The ${name.title} role has been created.`);
             console.log("*****************************************");
+            console.log("\n");
           })
           .then(() => showMenu());
       });
@@ -154,6 +187,7 @@ function createRole() {
 
 // Add an Employee
 function createEmployee() {
+  console.clear();
   db.fetchRoles().then(([rows, fields]) => {
     const roles = rows;
     const roleList = roles.map(({ id, title, salary, department_id }) => ({
@@ -201,11 +235,13 @@ function createEmployee() {
           const name = result;
           db.AddEmployee(name)
             .then(() => {
+              console.log("\n");
               console.log("*****************************************");
               console.log(
                 `${name.first_name} ${name.last_name} has been added`
               );
               console.log("*****************************************");
+              console.log("\n");
             })
             .then(() => showMenu());
         });
@@ -214,6 +250,7 @@ function createEmployee() {
 }
 // Update an Employee Role
 function UpdateRole() {
+  console.clear();
   db.fetchEmployees().then(([rows, fields]) => {
     const employees = rows;
     const employeeList = employees.map(
@@ -247,9 +284,11 @@ function UpdateRole() {
           const name = result;
           db.updateEmployee(result.employeeId, result.roleId)
             .then(() => {
+              console.log("\n");
               console.log("*****************************************");
               console.log(`Update successful`);
               console.log("*****************************************");
+              console.log("\n");
             })
             .then(() => showMenu());
         });
@@ -260,6 +299,7 @@ function UpdateRole() {
 //ADDITIONAL OPTIONS
 //Update employee manager
 function UpdateManager() {
+  console.clear();
   db.fetchEmployees().then(([rows, fields]) => {
     const employees = rows;
     const employeeList = employees.map(
@@ -287,9 +327,11 @@ function UpdateManager() {
         const name = result;
         db.updateEmployeeManager(result.employeeId, result.managerId)
           .then(() => {
+            console.log("\n");
             console.log("*****************************************");
             console.log(`Update successful`);
             console.log("*****************************************");
+            console.log("\n");
           })
           .then(() => showMenu());
       });
