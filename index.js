@@ -17,7 +17,8 @@ function showMenu() {
           "Add a Department",
           "Add a Role",
           "Add an Employee",
-          "Update an Employee Role",
+          "Update an Employee's Role",
+          "Update an Employee's Manager",
         ],
       },
     ])
@@ -41,8 +42,11 @@ function showMenu() {
         case "Add an Employee":
           createEmployee();
           break;
-        case "Update an Employee Role":
+        case "Update an Employee's Role":
           UpdateRole();
+          break;
+        case "Update an Employee's Manager":
+          UpdateManager();
           break;
       }
     });
@@ -250,6 +254,45 @@ function UpdateRole() {
             .then(() => showMenu());
         });
     });
+  });
+}
+
+//ADDITIONAL OPTIONS
+//Update employee manager
+function UpdateManager() {
+  db.fetchEmployees().then(([rows, fields]) => {
+    const employees = rows;
+    const employeeList = employees.map(
+      ({ id, first_name, last_name, role_id, manager_id }) => ({
+        name: `${first_name} ${last_name}`,
+        value: id,
+      })
+    );
+    inquirer
+      .prompt([
+        {
+          type: "list",
+          name: "employeeId",
+          message: "Select the Employee to update",
+          choices: employeeList,
+        },
+        {
+          type: "list",
+          name: "managerId",
+          message: "Select the New Manager",
+          choices: employeeList,
+        },
+      ])
+      .then(result => {
+        const name = result;
+        db.updateEmployeeManager(result.employeeId, result.managerId)
+          .then(() => {
+            console.log("*****************************************");
+            console.log(`Update successful`);
+            console.log("*****************************************");
+          })
+          .then(() => showMenu());
+      });
   });
 }
 

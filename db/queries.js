@@ -44,6 +44,15 @@ class DB {
         employeeId,
       ]);
   }
+
+  updateEmployeeManager(employeeId, managerId) {
+    return this.db
+      .promise()
+      .query(`UPDATE employee SET manager_id = ? WHERE id = ?`, [
+        managerId,
+        employeeId,
+      ]);
+  }
 }
 
 module.exports = new DB(action);
