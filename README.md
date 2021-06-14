@@ -29,8 +29,8 @@ https://user-images.githubusercontent.com/80176140/121831034-1a14f180-cc8c-11eb-
 
 
 Run by typing 
-```npm start```
-  Select from the available options using the command line to create and edit Departments, Roles, and Employees
+```npm start``` into the CLI. 
+  Select from the available options to create and edit Departments, Roles, and Employees
 
   ## License:
 
